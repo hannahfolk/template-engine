@@ -1,3 +1,5 @@
+// Dependencies
+// ===============================================================
 const inquirer = require("inquirer");
 const fs = require("fs");
 const Employee = require("./lib/Employee");
@@ -6,6 +8,7 @@ const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 const generateHTML = require("./generateHTML");
 
+// The CLI, with repeating questions if the user wants to continue adding employees
 const getInfo = async (info = []) => {
   const prompts = [
     {
@@ -46,9 +49,12 @@ const getInfo = async (info = []) => {
   return confirm ? getInfo(newEmployee) : newEmployee;
 };
 
+// This function will acquire all the employee info from the getInfo() function, put that information into a string to send back to generateHTML.js, which will be then give the final HTML code to be written into an HTML file
 async function main() {
+  // Grab all employee info
   const employees = await getInfo();
 
+  // Create a new employee array to put all the employees in the proper constructors
   const newEmployees = [];
   employees.forEach(element => {
     if (element.role === "engineer") {
@@ -63,6 +69,7 @@ async function main() {
     }
   });
 
+  // Create a cards for each employee using template literal and string (haha pun intended) them all together
   let cards = "";
   for (let i = 0; i < newEmployees.length; i++) {
     
@@ -131,8 +138,7 @@ async function main() {
       cards += newCard;
   }
 
-  console.log(cards);
-
+  // Write the HTML file with the team profile
   fs.writeFile("./output/team.html", generateHTML(cards), (err) => {
     if (err) throw err;
     console.log("Done!");

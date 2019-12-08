@@ -1,3 +1,4 @@
+// Create a string of HTML code, using the cards created on the server-side Javascript file
 function generateHTML(data) {
     return `<!DOCTYPE html>
     <html lang="en">
@@ -67,4 +68,5 @@ function generateHTML(data) {
     </html>`
 }
 
+// Export the generateHTML function with the template literals to the server-side Javascript file
 module.exports = generateHTML;
